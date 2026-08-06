@@ -1,0 +1,9 @@
+parameters:
+    level: 7
+    paths:
+        - src
+    tmpDir: build/phpstan
+    ignoreErrors:
+        -
+            identifier: trait.unused
+            path: src/Concerns/PurgesCloudflareCache.php
