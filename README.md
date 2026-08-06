@@ -43,42 +43,79 @@ Create a Cloudflare API token with **Zone → Cache Purge** limited to the site 
 
 ## Cacheable routes (critical)
 
-Cloudflare will **not** cache responses that set cookies. Do **not** put this middleware on the default `web` stack.
+Cloudflare will **not** cache responses that set cookies. Do **not** put this middleware only on the default `web` stack.
 
-Register a **stateless** middleware group and only put public GET pages there:
+### With Waymaker (recommended)
+
+Keep a single Waymaker-generated routes file. Opt pages into a cookie-free stack with a **middleware group**:
 
 ```php
 // bootstrap/app.php
-->withMiddleware(function (Middleware $middleware) {
-    $middleware->group('static', [
-        \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        // Your Inertia shared-props middleware if it does not need sessions
-        \HardImpact\CloudflareCache\Http\Middleware\CacheResponse::class,
-    ]);
-})
+use HardImpact\CloudflareCache\Support\StaticMiddleware;
+use HardImpact\Waymaker\Facades\Waymaker;
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php', // optional non-Waymaker web routes
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+        then: function () {
+            // Load Waymaker outside the forced `web` wrapper so `static` is top-level
+            Waymaker::routes();
+        },
+    )
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->group('static', StaticMiddleware::defaults([
+            \App\Http\Middleware\HandleInertiaRequests::class,
+            // CSP / other cookie-free middleware…
+        ]));
+    })
+    ->create();
 ```
 
 ```php
-// routes/static.php
-Route::get('/', [ProjectsController::class, 'index'])->name('projects');
-Route::get('/studio', ...)->name('studio');
-Route::get('/projecten/{slug}', ...)->name('portfolio-item');
+// app/Http/Controllers/ProjectsController.php
+use HardImpact\Waymaker\Get;
+
+class ProjectsController extends Controller
+{
+    public static string $middlewareGroup = 'static';
+
+    #[Get(uri: '/', name: 'projects')]
+    public function index(): Response { ... }
+}
 ```
 
+Per-route override (same controller can mix groups):
+
 ```php
-// bootstrap/app.php routing
-then: function () {
-    Route::middleware('static')
-        ->group(base_path('routes/static.php'));
-},
+#[Get(uri: '/pricing', name: 'pricing', middlewareGroup: 'static')]
+public function pricing(): Response { ... }
+
+#[Get(uri: '/account', name: 'account', middlewareGroup: 'web', middleware: 'auth')]
+public function account(): Response { ... }
 ```
 
-Alias is also registered:
+`StaticMiddleware::defaults()` is:
+
+1. `SubstituteBindings`
+2. Your `$before` stack (Inertia share, etc.)
+3. `CacheResponse` (this package)
+4. Your `$after` stack
+
+Requires **Waymaker** with `middlewareGroup` support (see Waymaker changelog / docs).
+
+### Without Waymaker
+
+Alias is also registered for classic routes:
 
 ```php
-Route::get('/privacy', ...)->middleware('cloudflare.cache');
-Route::get('/pricing', ...)->middleware('cloudflare.cache:86400'); // s-maxage
-Route::get('/news', ...)->middleware('cloudflare.cache:300,0'); // s-maxage, max-age
+Route::middleware('static')->group(function () {
+    Route::get('/privacy', ...)->name('privacy');
+});
+
+// or
+Route::get('/pricing', ...)->middleware('cloudflare.cache:86400');
 ```
 
 Default headers:
