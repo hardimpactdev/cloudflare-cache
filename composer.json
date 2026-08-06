@@ -14,8 +14,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Nick Retel",
-            "email": "nick.retel@gmail.com",
+            "name": "HardImpact",
+            "email": "dev@hardimpact.com",
             "role": "Developer"
         }
     ],
@@ -72,7 +72,7 @@
             "vendor/bin/pint --parallel --test"
         ],
         "analyse": [
-            "vendor/bin/phpstan analyse"
+            "vendor/bin/phpstan analyse --memory-limit=512M"
         ],
         "test:types": [
             "vendor/bin/pest --type-coverage --min=100"
