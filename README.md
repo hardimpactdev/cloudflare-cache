@@ -232,9 +232,22 @@ php artisan cloudflare-cache:warm https://example.com/ --sync
 
 Off after purge by default (`CLOUDFLARE_CACHE_WARM_AFTER_PURGE=false`). Enable per call with `warm: true`, or set the env flag globally. Warming issues cookie-less GET requests so the edge can re-fill quickly after invalidation.
 
+## Inertia + Cloudflare (required Cache Rules)
+
+Inertia serves **HTML** and **JSON** on the same URL (`X-Inertia: true` for partials). Cloudflare free/pro does **not** vary the cache key on that header, so a cached document will be served to Inertia XHRs unless you bypass.
+
+This package sets `private, no-store` on Inertia responses (store-side). You also need a **lookup-side** Cache Rule on a zone that actually proxies traffic:
+
+1. **Bypass cache** when `any(http.request.headers["x-inertia"][*] == "true")`
+2. **Eligible for cache / Cache Everything** for other `GET`s (respect origin `Cache-Control`)
+
+DNS for the site must be **proxied** (orange cloud) on that zone. Grey-cloud DNS (DNS only) means your Cache Rules never run — traffic hits Laravel Cloud’s managed edge instead, which cannot set per-header bypass rules.
+
 ## Laravel Cloud note
 
 Laravel Cloud’s built-in edge purge API clears the **whole environment**. This package targets **your Cloudflare zone** for precise URL purge (Filament saves). Use both: deploy purge from Cloud, content purge from this package.
+
+If the custom domain is DNS-only to Laravel Cloud, HTML may still be edge-cached by Cloud’s Cloudflare when you send `public, s-maxage`. Without Cache Rules you control, Inertia navigations will get that HTML — either orange-cloud through your zone with the rules above, or stop sharing HTML at the edge (`private`) for those pages.
 
 ## Testing
 

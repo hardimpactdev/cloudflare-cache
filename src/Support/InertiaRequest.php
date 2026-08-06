@@ -23,7 +23,8 @@ final class InertiaRequest
     }
 
     /**
-     * Cache-key fragment for origin-level caches (e.g. spatie/laravel-responsecache).
+     * Stable key fragment distinguishing document vs Inertia partial visits.
+     * Useful for tests and any non-CDN keying — Cloudflare free/pro ignores Vary.
      */
     public static function cacheKeyFragment(Request $request): string
     {
