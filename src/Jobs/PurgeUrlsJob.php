@@ -30,15 +30,16 @@ class PurgeUrlsJob implements ShouldQueue
     public function handle(CloudflareCacheManager $cache): void
     {
         if ($this->purgeEverything) {
-            $cache->client()->purgeEverything();
+            $cache->purgeEverything(async: false);
 
             return;
         }
 
         $cache->purgeNow($this->urls);
 
-        if ($this->warm) {
-            $cache->warm($this->urls, async: true);
+        // Warm inline (synchronous) rather than dispatching a second queued job.
+        if ($this->warm && (bool) config('cloudflare-cache.warm.enabled', true)) {
+            $cache->warmNow($this->urls);
         }
     }
 }

@@ -25,6 +25,12 @@ class CacheResponse
     {
         $response = $next($request);
 
+        // A disabled package (or a disallowed environment) must be fully inert:
+        // no header rewrites at all, not even the Inertia no-store branch below.
+        if (! $this->cache->shouldOperate()) {
+            return $response;
+        }
+
         // Always mark Inertia partials as non-cacheable at the edge, even when
         // the package is "enabled" for document HTML on the same URL.
         if (InertiaRequest::isInertia($request)) {

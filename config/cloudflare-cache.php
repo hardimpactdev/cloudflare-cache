@@ -55,8 +55,8 @@ return [
     'headers' => [
         'max_age' => (int) env('CLOUDFLARE_CACHE_MAX_AGE', 0),
         's_maxage' => (int) env('CLOUDFLARE_CACHE_S_MAXAGE', 3600),
-        'stale_while_revalidate' => (int) env('CLOUDFLARE_CACHE_STALE_WHILE_REVALIDATE', 86400),
-        'stale_if_error' => (int) env('CLOUDFLARE_CACHE_STALE_IF_ERROR', 86400),
+        'stale_while_revalidate' => (int) env('CLOUDFLARE_CACHE_STALE_WHILE_REVALIDATE', 0),
+        'stale_if_error' => (int) env('CLOUDFLARE_CACHE_STALE_IF_ERROR', 0),
     ],
 
     /*

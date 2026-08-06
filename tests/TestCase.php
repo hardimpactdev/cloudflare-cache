@@ -18,6 +18,7 @@ abstract class TestCase extends Orchestra
 
     protected function defineEnvironment($app): void
     {
+        $app['config']->set('app.key', 'base64:'.base64_encode(random_bytes(32)));
         $app['config']->set('cloudflare-cache.enabled', true);
         $app['config']->set('cloudflare-cache.environments', ['testing', 'production']);
         $app['config']->set('cloudflare-cache.zone_id', 'test-zone-id');

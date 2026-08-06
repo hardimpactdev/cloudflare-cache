@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method static bool enabled()
+ * @method static bool shouldOperate()
  * @method static bool shouldApplyHeaders(?Request $request = null)
  * @method static Response applyCacheHeaders(Response $response, array{max_age?: int, s_maxage?: int, stale_while_revalidate?: int|null, stale_if_error?: int|null} $overrides = [])
  * @method static void purge(string|list<string>|PurgesCloudflareUrls|Model $urls, bool $async = true, bool $warm = false)

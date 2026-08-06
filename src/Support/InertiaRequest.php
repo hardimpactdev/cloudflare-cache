@@ -21,24 +21,4 @@ final class InertiaRequest
     {
         return $request->headers->has('X-Inertia');
     }
-
-    /**
-     * Stable key fragment distinguishing document vs Inertia partial visits.
-     * Useful for tests and any non-CDN keying — Cloudflare free/pro ignores Vary.
-     */
-    public static function cacheKeyFragment(Request $request): string
-    {
-        if (! self::isInertia($request)) {
-            return 'document';
-        }
-
-        $parts = [
-            'inertia',
-            'partial:'.($request->header('X-Inertia-Partial-Data') ?? ''),
-            'except:'.($request->header('X-Inertia-Partial-Except') ?? ''),
-            'version:'.($request->header('X-Inertia-Version') ?? ''),
-        ];
-
-        return implode('|', $parts);
-    }
 }

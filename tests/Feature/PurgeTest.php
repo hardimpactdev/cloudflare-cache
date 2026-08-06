@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use HardImpact\CloudflareCache\Facades\CloudflareCache;
 use HardImpact\CloudflareCache\Jobs\PurgeUrlsJob;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 
@@ -98,6 +99,43 @@ it('no-ops when disabled', function () {
     config(['cloudflare-cache.enabled' => false]);
 
     CloudflareCache::purge(['https://lindaretel.nl/'], async: false);
+
+    Http::assertNothingSent();
+});
+
+it('does not purge when the current environment is not allowed', function () {
+    Http::fake();
+    config(['cloudflare-cache.environments' => ['production']]);
+
+    CloudflareCache::purge(['https://lindaretel.nl/'], async: false);
+
+    Http::assertNothingSent();
+});
+
+it('does not purge everything when the current environment is not allowed', function () {
+    Http::fake();
+    config(['cloudflare-cache.environments' => ['production']]);
+
+    CloudflareCache::purgeEverything(async: false);
+
+    Http::assertNothingSent();
+});
+
+it('does not warm when the current environment is not allowed', function () {
+    Http::fake();
+    config(['cloudflare-cache.environments' => ['production']]);
+
+    CloudflareCache::warm(['https://lindaretel.nl/'], async: false);
+
+    Http::assertNothingSent();
+});
+
+it('does not purge urls for a model that does not implement PurgesCloudflareUrls', function () {
+    Http::fake();
+
+    $model = new class extends Model {};
+
+    CloudflareCache::purge($model, async: false);
 
     Http::assertNothingSent();
 });

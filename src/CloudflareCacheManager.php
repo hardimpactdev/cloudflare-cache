@@ -29,20 +29,34 @@ class CloudflareCacheManager
         return (bool) config('cloudflare-cache.enabled', true);
     }
 
-    public function shouldApplyHeaders(?Request $request = null): bool
+    /**
+     * Whether the current environment is allowed to set edge cache headers.
+     */
+    protected function environmentAllowed(): bool
     {
-        if (! $this->enabled()) {
-            return false;
-        }
-
         $environments = config('cloudflare-cache.environments', ['production']);
 
-        if (! in_array(app()->environment(), $environments, true)) {
+        return in_array(app()->environment(), $environments, true);
+    }
+
+    /**
+     * Whether the package is enabled AND allowed to run in the current environment.
+     * Gates header application, purge, and warm alike so a local environment with
+     * production credentials can never touch the live zone.
+     */
+    public function shouldOperate(): bool
+    {
+        return $this->enabled() && $this->environmentAllowed();
+    }
+
+    public function shouldApplyHeaders(?Request $request = null): bool
+    {
+        if (! $this->shouldOperate()) {
             return false;
         }
 
         if ($request !== null) {
-            if (! $request->isMethodSafe() || $request->method() !== 'GET') {
+            if ($request->method() !== 'GET') {
                 return false;
             }
 
@@ -52,6 +66,13 @@ class CloudflareCacheManager
             }
 
             if ($this->requestIsAuthenticated($request)) {
+                return false;
+            }
+
+            // Session middleware ran (web group) — StartSession/AddQueuedCookiesToResponse
+            // attach cookies AFTER this middleware when it's innermost, so the response-side
+            // Set-Cookie check below can run too early to catch them. Skip public headers here.
+            if ($request->hasSession()) {
                 return false;
             }
         }
@@ -134,7 +155,7 @@ class CloudflareCacheManager
      */
     public function purge(string|array|PurgesCloudflareUrls|Model $urls, bool $async = true, bool $warm = false): void
     {
-        if (! $this->enabled()) {
+        if (! $this->shouldOperate()) {
             return;
         }
 
@@ -181,7 +202,7 @@ class CloudflareCacheManager
 
     public function purgeEverything(bool $async = true): void
     {
-        if (! $this->enabled()) {
+        if (! $this->shouldOperate()) {
             return;
         }
 
@@ -204,7 +225,7 @@ class CloudflareCacheManager
      */
     public function warm(string|array|PurgesCloudflareUrls|Model $urls, bool $async = true): void
     {
-        if (! $this->enabled() || ! (bool) config('cloudflare-cache.warm.enabled', true)) {
+        if (! $this->shouldOperate() || ! (bool) config('cloudflare-cache.warm.enabled', true)) {
             return;
         }
 
@@ -273,17 +294,6 @@ class CloudflareCacheManager
         }
 
         if ($urls instanceof Model) {
-            if ($urls instanceof PurgesCloudflareUrls) {
-                return UrlNormalizer::normalizeMany($urls->cloudflareCacheUrls());
-            }
-
-            if (method_exists($urls, 'cloudflareCacheUrls')) {
-                /** @var list<string> $methodUrls */
-                $methodUrls = $urls->cloudflareCacheUrls();
-
-                return UrlNormalizer::normalizeMany($methodUrls);
-            }
-
             return [];
         }
 
