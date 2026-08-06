@@ -4,12 +4,12 @@ All notable changes to `cloudflare-cache` will be documented in this file.
 
 ## Unreleased
 
-### Added
+### Changed
 
-- Inertia-aware edge headers: document visits stay public/CDN-cacheable; `X-Inertia` partials get `private, no-store`
-- Optional Spatie ResponseCache profile + hasher (`InertiaCacheProfile`, `InertiaCacheHasher`) for origin SSR caching
+- Remove optional Spatie ResponseCache integration — this package is Cloudflare edge only
+- Keep Inertia-safe edge behavior: document visits cacheable; `X-Inertia` partials get `private, no-store`
 
+### Added (prior)
 
-### Added
+- Inertia-aware edge headers and CF cache-rule guidance for document vs XHR
 
-- Initial release: cache headers middleware, Cloudflare purge client, optional warming, model trait, and Artisan commands.

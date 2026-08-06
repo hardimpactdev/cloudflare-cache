@@ -2,8 +2,6 @@ parameters:
     level: 7
     paths:
         - src
-    scanDirectories:
-        - vendor/spatie/laravel-responsecache/src
     tmpDir: build/phpstan
     ignoreErrors:
         -
