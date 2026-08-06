@@ -75,3 +75,36 @@ it('skips headers when package is disabled', function () {
 
     expect($header)->not->toContain('s-maxage=');
 });
+
+it('forces private no-store for Inertia partial visits', function () {
+    Route::middleware(CacheResponse::class)->get('/inertia-page', fn () => response()->json([
+        'component' => 'home',
+        'props' => [],
+        'url' => '/',
+        'version' => 'abc',
+    ]));
+
+    $response = $this->get('/inertia-page', [
+        'X-Inertia' => 'true',
+        'X-Requested-With' => 'XMLHttpRequest',
+    ]);
+
+    $response->assertOk();
+    $header = (string) $response->headers->get('Cache-Control');
+
+    expect($header)
+        ->toContain('private')
+        ->toContain('no-store')
+        ->not->toContain('s-maxage=');
+
+    expect((string) $response->headers->get('Vary'))->toContain('X-Inertia');
+});
+
+it('sets public headers for document visits and varies on X-Inertia', function () {
+    Route::middleware(CacheResponse::class)->get('/doc-page', fn () => response('<html>ok</html>'));
+
+    $response = $this->get('/doc-page');
+
+    expect((string) $response->headers->get('Cache-Control'))->toContain('public');
+    expect((string) $response->headers->get('Vary'))->toContain('X-Inertia');
+});

@@ -8,6 +8,7 @@ use HardImpact\CloudflareCache\Client\CloudflareClient;
 use HardImpact\CloudflareCache\Contracts\PurgesCloudflareUrls;
 use HardImpact\CloudflareCache\Jobs\PurgeUrlsJob;
 use HardImpact\CloudflareCache\Jobs\WarmUrlsJob;
+use HardImpact\CloudflareCache\Support\InertiaRequest;
 use HardImpact\CloudflareCache\Support\UrlNormalizer;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -45,12 +46,31 @@ class CloudflareCacheManager
                 return false;
             }
 
+            // Full document HTML only. Inertia XHR expects JSON and must not share a CDN entry.
+            if (InertiaRequest::isInertia($request)) {
+                return false;
+            }
+
             if ($this->requestIsAuthenticated($request)) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * Force non-cacheable headers for Inertia partial visits.
+     *
+     * Cloudflare free/pro does not vary the cache key on `X-Inertia`, so a public
+     * HTML document would otherwise be served for Inertia JSON requests.
+     */
+    public function applyInertiaNoStoreHeaders(Response $response): Response
+    {
+        $response->headers->set('Cache-Control', 'private, no-store');
+        $this->mergeVary($response, ['Accept-Encoding', 'X-Inertia']);
+
+        return $response;
     }
 
     /**
@@ -90,12 +110,23 @@ class CloudflareCacheManager
 
         $response->headers->set('Cache-Control', implode(', ', $directives));
 
-        // Cloudflare respects this; also helps intermediates avoid user-specific variants.
-        if (! $response->headers->has('Vary')) {
-            $response->headers->set('Vary', 'Accept-Encoding');
-        }
+        // Document the Inertia variant even though Cloudflare free ignores custom Vary.
+        // Other CDNs / browsers may still use it; origin caches should key on X-Inertia.
+        $this->mergeVary($response, ['Accept-Encoding', 'X-Inertia']);
 
         return $response;
+    }
+
+    /**
+     * @param  list<string>  $values
+     */
+    protected function mergeVary(Response $response, array $values): void
+    {
+        $existing = $response->headers->get('Vary', '');
+        $parts = array_filter(array_map('trim', explode(',', (string) $existing)));
+        $merged = array_values(array_unique([...$parts, ...$values]));
+
+        $response->headers->set('Vary', implode(', ', $merged));
     }
 
     /**

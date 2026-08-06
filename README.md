@@ -130,6 +130,52 @@ Middleware skips: non-GET, non-2xx, authenticated users, `Set-Cookie` responses,
 
 For HTML to be eligible, ensure a **Cache Everything** (or equivalent) rule with **Browser TTL: respect origin**. Static extensions are cached by Cloudflare by default.
 
+
+
+## Inertia + SSR
+
+Document visits and Inertia XHR share the same URL. Cloudflare free/pro **does not vary** the cache key on `X-Inertia`, so caching both would mix HTML and JSON.
+
+This package therefore:
+
+1. **Edge-caches only full document visits** (`Cache-Control: public, s-maxage=…`)
+2. **Forces `private, no-store` on Inertia partials** (`X-Inertia: true`) so they never reuse the document entry
+3. Sets `Vary: Accept-Encoding, X-Inertia` (useful for other caches; Cloudflare still needs the rule below)
+
+### Cloudflare Cache Rule expression
+
+Only cache when the request is **not** an Inertia navigation:
+
+```text
+not len(http.request.headers["x-inertia"]) > 0
+```
+
+With **Cache Everything** + **Browser TTL: respect origin**.
+
+Warming only fetches document HTML (no `X-Inertia` header).
+
+### Optional origin SSR cache (Flare approach)
+
+For in-app caching of SSR HTML *and* Inertia JSON (separate keys), install Spatie Response Cache and point config at this package:
+
+```bash
+composer require spatie/laravel-responsecache
+```
+
+```php
+// config/responsecache.php
+'cache_profile' => \HardImpact\CloudflareCache\ResponseCache\InertiaCacheProfile::class,
+'hasher' => \HardImpact\CloudflareCache\ResponseCache\InertiaCacheHasher::class,
+```
+
+Add Spatie`s `CacheResponse` middleware on the same static routes (in addition to this package`s edge headers middleware). The hasher keys on:
+
+- document vs Inertia
+- partial data / except headers
+- Inertia version
+
+Inspired by [Caching Inertia`s SSR responses (Flare)](https://flareapp.io/blog/caching-inertias-ssr-responses).
+
 ## Purge
 
 ```php
