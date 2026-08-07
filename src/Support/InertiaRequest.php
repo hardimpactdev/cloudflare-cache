@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HardImpact\CloudflareCache\Support;
+namespace NckRtl\CloudflareCache\Support;
 
 use Illuminate\Http\Request;
 

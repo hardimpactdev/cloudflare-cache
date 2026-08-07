@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use HardImpact\CloudflareCache\Http\Middleware\CacheResponse;
+use NckRtl\CloudflareCache\Http\Middleware\CacheResponse;
 use Illuminate\Support\Facades\Route;
 
 it('sets public cache headers on successful get responses', function () {

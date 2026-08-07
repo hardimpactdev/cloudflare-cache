@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace HardImpact\CloudflareCache\Http\Middleware;
+namespace NckRtl\CloudflareCache\Http\Middleware;
 
 use Closure;
-use HardImpact\CloudflareCache\CloudflareCacheManager;
-use HardImpact\CloudflareCache\Support\InertiaRequest;
+use NckRtl\CloudflareCache\CloudflareCacheManager;
+use NckRtl\CloudflareCache\Support\InertiaRequest;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 

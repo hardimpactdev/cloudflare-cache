@@ -63,8 +63,8 @@ Keep a single Waymaker-generated routes file. Opt pages into a cookie-free stack
 
 ```php
 // bootstrap/app.php
-use HardImpact\CloudflareCache\Support\StaticMiddleware;
-use HardImpact\Waymaker\Facades\Waymaker;
+use NckRtl\CloudflareCache\Support\StaticMiddleware;
+use NckRtl\Waymaker\Facades\Waymaker;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -87,7 +87,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
 ```php
 // app/Http/Controllers/ProjectsController.php
-use HardImpact\Waymaker\Get;
+use NckRtl\Waymaker\Get;
 
 class ProjectsController extends Controller
 {
@@ -186,7 +186,7 @@ There is **no** second origin cache in this package — only Cloudflare edge hea
 ## Purge
 
 ```php
-use HardImpact\CloudflareCache\Facades\CloudflareCache;
+use NckRtl\CloudflareCache\Facades\CloudflareCache;
 
 CloudflareCache::purge('https://example.com/');
 CloudflareCache::purge([
@@ -207,8 +207,8 @@ CloudflareCache::purgeEverything();
 ### Eloquent / Filament
 
 ```php
-use HardImpact\CloudflareCache\Concerns\PurgesCloudflareCache;
-use HardImpact\CloudflareCache\Contracts\PurgesCloudflareUrls;
+use NckRtl\CloudflareCache\Concerns\PurgesCloudflareCache;
+use NckRtl\CloudflareCache\Contracts\PurgesCloudflareUrls;
 use Illuminate\Database\Eloquent\Model;
 
 class PortfolioItem extends Model implements PurgesCloudflareUrls

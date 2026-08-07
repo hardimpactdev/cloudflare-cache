@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HardImpact\CloudflareCache\Console\Commands;
+namespace NckRtl\CloudflareCache\Console\Commands;
 
-use HardImpact\CloudflareCache\CloudflareCacheManager;
+use NckRtl\CloudflareCache\CloudflareCacheManager;
 use Illuminate\Console\Command;
 
 class PurgeCommand extends Command

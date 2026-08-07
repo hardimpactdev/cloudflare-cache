@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use HardImpact\CloudflareCache\Facades\CloudflareCache;
-use HardImpact\CloudflareCache\Jobs\PurgeUrlsJob;
+use NckRtl\CloudflareCache\Facades\CloudflareCache;
+use NckRtl\CloudflareCache\Jobs\PurgeUrlsJob;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;

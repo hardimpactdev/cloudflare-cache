@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use HardImpact\CloudflareCache\Support\InertiaRequest;
+use NckRtl\CloudflareCache\Support\InertiaRequest;
 use Illuminate\Http\Request;
 
 it('detects inertia partial requests', function () {

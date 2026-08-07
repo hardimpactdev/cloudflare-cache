@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use HardImpact\CloudflareCache\CloudflareCacheManager;
-use HardImpact\CloudflareCache\Jobs\PurgeUrlsJob;
+use NckRtl\CloudflareCache\CloudflareCacheManager;
+use NckRtl\CloudflareCache\Jobs\PurgeUrlsJob;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 

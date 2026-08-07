@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HardImpact\CloudflareCache\Jobs;
+namespace NckRtl\CloudflareCache\Jobs;
 
-use HardImpact\CloudflareCache\CloudflareCacheManager;
+use NckRtl\CloudflareCache\CloudflareCacheManager;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

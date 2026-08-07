@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HardImpact\CloudflareCache\Tests;
+namespace NckRtl\CloudflareCache\Tests;
 
-use HardImpact\CloudflareCache\CloudflareCacheServiceProvider;
+use NckRtl\CloudflareCache\CloudflareCacheServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra

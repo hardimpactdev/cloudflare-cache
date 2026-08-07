@@ -11,7 +11,7 @@ Laravel package for Cloudflare edge caching: response headers middleware, URL/zo
 
 ## Conventions
 
-- Namespace: `HardImpact\CloudflareCache`
+- Namespace: `NckRtl\CloudflareCache`
 - Never strip `Set-Cookie` headers — apps must use a stateless middleware group for cacheable routes
 - Purge defaults to queued; use `async: false` or `--sync` for CLI/tests
 - Soft-fail when credentials missing unless `purge.soft_fail` is false

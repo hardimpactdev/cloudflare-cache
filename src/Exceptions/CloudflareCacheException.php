@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HardImpact\CloudflareCache\Exceptions;
+namespace NckRtl\CloudflareCache\Exceptions;
 
 use RuntimeException;
 

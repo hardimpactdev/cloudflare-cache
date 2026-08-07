@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace HardImpact\CloudflareCache;
+namespace NckRtl\CloudflareCache;
 
-use HardImpact\CloudflareCache\Client\CloudflareClient;
-use HardImpact\CloudflareCache\Contracts\PurgesCloudflareUrls;
-use HardImpact\CloudflareCache\Jobs\PurgeUrlsJob;
-use HardImpact\CloudflareCache\Jobs\WarmUrlsJob;
-use HardImpact\CloudflareCache\Support\InertiaRequest;
-use HardImpact\CloudflareCache\Support\UrlNormalizer;
+use NckRtl\CloudflareCache\Client\CloudflareClient;
+use NckRtl\CloudflareCache\Contracts\PurgesCloudflareUrls;
+use NckRtl\CloudflareCache\Jobs\PurgeUrlsJob;
+use NckRtl\CloudflareCache\Jobs\WarmUrlsJob;
+use NckRtl\CloudflareCache\Support\InertiaRequest;
+use NckRtl\CloudflareCache\Support\UrlNormalizer;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;

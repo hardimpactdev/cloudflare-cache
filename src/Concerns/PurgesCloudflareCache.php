@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HardImpact\CloudflareCache\Concerns;
+namespace NckRtl\CloudflareCache\Concerns;
 
-use HardImpact\CloudflareCache\Contracts\PurgesCloudflareUrls;
-use HardImpact\CloudflareCache\Facades\CloudflareCache;
+use NckRtl\CloudflareCache\Contracts\PurgesCloudflareUrls;
+use NckRtl\CloudflareCache\Facades\CloudflareCache;
 
 /**
  * @phpstan-require-implements PurgesCloudflareUrls

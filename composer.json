@@ -38,12 +38,12 @@
     },
     "autoload": {
         "psr-4": {
-            "HardImpact\\CloudflareCache\\": "src/"
+            "NckRtl\\CloudflareCache\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "HardImpact\\CloudflareCache\\Tests\\": "tests/",
+            "NckRtl\\CloudflareCache\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/",
             "Workbench\\Database\\Factories\\": "workbench/database/factories/",
             "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
@@ -93,10 +93,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "HardImpact\\CloudflareCache\\CloudflareCacheServiceProvider"
+                "NckRtl\\CloudflareCache\\CloudflareCacheServiceProvider"
             ],
             "aliases": {
-                "CloudflareCache": "HardImpact\\CloudflareCache\\Facades\\CloudflareCache"
+                "CloudflareCache": "NckRtl\\CloudflareCache\\Facades\\CloudflareCache"
             }
         }
     },

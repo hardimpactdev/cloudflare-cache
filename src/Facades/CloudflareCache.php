@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace HardImpact\CloudflareCache\Facades;
+namespace NckRtl\CloudflareCache\Facades;
 
-use HardImpact\CloudflareCache\Client\CloudflareClient;
-use HardImpact\CloudflareCache\CloudflareCacheManager;
-use HardImpact\CloudflareCache\Contracts\PurgesCloudflareUrls;
+use NckRtl\CloudflareCache\Client\CloudflareClient;
+use NckRtl\CloudflareCache\CloudflareCacheManager;
+use NckRtl\CloudflareCache\Contracts\PurgesCloudflareUrls;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;

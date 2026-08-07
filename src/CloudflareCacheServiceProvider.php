@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace HardImpact\CloudflareCache;
+namespace NckRtl\CloudflareCache;
 
-use HardImpact\CloudflareCache\Client\CloudflareClient;
-use HardImpact\CloudflareCache\Console\Commands\PurgeCommand;
-use HardImpact\CloudflareCache\Console\Commands\WarmCommand;
-use HardImpact\CloudflareCache\Http\Middleware\CacheResponse;
+use NckRtl\CloudflareCache\Client\CloudflareClient;
+use NckRtl\CloudflareCache\Console\Commands\PurgeCommand;
+use NckRtl\CloudflareCache\Console\Commands\WarmCommand;
+use NckRtl\CloudflareCache\Http\Middleware\CacheResponse;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;

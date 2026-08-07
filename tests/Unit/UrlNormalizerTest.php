@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use HardImpact\CloudflareCache\Support\UrlNormalizer;
+use NckRtl\CloudflareCache\Support\UrlNormalizer;
 
 it('normalizes and deduplicates absolute urls', function () {
     $urls = UrlNormalizer::normalizeMany([

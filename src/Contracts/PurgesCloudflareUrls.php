@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HardImpact\CloudflareCache\Contracts;
+namespace NckRtl\CloudflareCache\Contracts;
 
 interface PurgesCloudflareUrls
 {

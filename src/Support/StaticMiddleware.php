@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HardImpact\CloudflareCache\Support;
+namespace NckRtl\CloudflareCache\Support;
 
-use HardImpact\CloudflareCache\Http\Middleware\CacheResponse;
+use NckRtl\CloudflareCache\Http\Middleware\CacheResponse;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 
 /**

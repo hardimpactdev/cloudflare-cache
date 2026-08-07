@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use HardImpact\CloudflareCache\Http\Middleware\CacheResponse;
-use HardImpact\CloudflareCache\Support\StaticMiddleware;
+use NckRtl\CloudflareCache\Http\Middleware\CacheResponse;
+use NckRtl\CloudflareCache\Support\StaticMiddleware;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 
 it('builds a default static middleware stack', function () {
