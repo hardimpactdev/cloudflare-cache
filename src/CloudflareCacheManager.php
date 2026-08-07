@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace NckRtl\CloudflareCache;
 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use NckRtl\CloudflareCache\Client\CloudflareClient;
 use NckRtl\CloudflareCache\Contracts\PurgesCloudflareUrls;
 use NckRtl\CloudflareCache\Jobs\PurgeUrlsJob;
 use NckRtl\CloudflareCache\Jobs\WarmUrlsJob;
 use NckRtl\CloudflareCache\Support\InertiaRequest;
 use NckRtl\CloudflareCache\Support\UrlNormalizer;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 

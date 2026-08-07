@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace NckRtl\CloudflareCache\Client;
 
-use NckRtl\CloudflareCache\Exceptions\CloudflareCacheException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use NckRtl\CloudflareCache\Exceptions\CloudflareCacheException;
 
 class CloudflareClient
 {

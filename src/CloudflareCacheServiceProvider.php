@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace NckRtl\CloudflareCache;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Routing\Router;
+use Illuminate\Support\ServiceProvider;
 use NckRtl\CloudflareCache\Client\CloudflareClient;
 use NckRtl\CloudflareCache\Console\Commands\PurgeCommand;
 use NckRtl\CloudflareCache\Console\Commands\WarmCommand;
 use NckRtl\CloudflareCache\Http\Middleware\CacheResponse;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Routing\Router;
-use Illuminate\Support\ServiceProvider;
 
 class CloudflareCacheServiceProvider extends ServiceProvider
 {

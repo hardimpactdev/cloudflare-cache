@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace NckRtl\CloudflareCache\Facades;
 
-use NckRtl\CloudflareCache\Client\CloudflareClient;
-use NckRtl\CloudflareCache\CloudflareCacheManager;
-use NckRtl\CloudflareCache\Contracts\PurgesCloudflareUrls;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
+use NckRtl\CloudflareCache\Client\CloudflareClient;
+use NckRtl\CloudflareCache\CloudflareCacheManager;
+use NckRtl\CloudflareCache\Contracts\PurgesCloudflareUrls;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use NckRtl\CloudflareCache\CloudflareCacheManager;
-use NckRtl\CloudflareCache\Jobs\PurgeUrlsJob;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
+use NckRtl\CloudflareCache\CloudflareCacheManager;
+use NckRtl\CloudflareCache\Jobs\PurgeUrlsJob;
 
 it('warms synchronously after purge instead of queueing a second job', function () {
     Queue::fake();

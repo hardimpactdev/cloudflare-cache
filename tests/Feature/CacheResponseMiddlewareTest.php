@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use NckRtl\CloudflareCache\Http\Middleware\CacheResponse;
 use Illuminate\Support\Facades\Route;
+use NckRtl\CloudflareCache\Http\Middleware\CacheResponse;
 
 it('sets public cache headers on successful get responses', function () {
     Route::middleware(CacheResponse::class)->get('/cached-page', fn () => response('ok'));

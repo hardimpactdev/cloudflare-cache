@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use NckRtl\CloudflareCache\Facades\CloudflareCache;
-use NckRtl\CloudflareCache\Jobs\PurgeUrlsJob;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
+use NckRtl\CloudflareCache\Facades\CloudflareCache;
+use NckRtl\CloudflareCache\Jobs\PurgeUrlsJob;
 
 it('purges urls synchronously via the cloudflare api', function () {
     Http::fake([

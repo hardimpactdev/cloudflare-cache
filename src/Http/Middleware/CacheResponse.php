@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace NckRtl\CloudflareCache\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use NckRtl\CloudflareCache\CloudflareCacheManager;
 use NckRtl\CloudflareCache\Support\InertiaRequest;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CacheResponse

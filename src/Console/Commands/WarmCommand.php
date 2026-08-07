@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NckRtl\CloudflareCache\Console\Commands;
 
-use NckRtl\CloudflareCache\CloudflareCacheManager;
 use Illuminate\Console\Command;
+use NckRtl\CloudflareCache\CloudflareCacheManager;
 
 class WarmCommand extends Command
 {

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use NckRtl\CloudflareCache\Support\InertiaRequest;
 use Illuminate\Http\Request;
+use NckRtl\CloudflareCache\Support\InertiaRequest;
 
 it('detects inertia partial requests', function () {
     $request = Request::create('/', 'GET');

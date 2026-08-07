@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NckRtl\CloudflareCache\Support;
 
-use NckRtl\CloudflareCache\Http\Middleware\CacheResponse;
 use Illuminate\Routing\Middleware\SubstituteBindings;
+use NckRtl\CloudflareCache\Http\Middleware\CacheResponse;
 
 /**
  * Helpers for building a cookie-free middleware stack for edge-cacheable pages.
