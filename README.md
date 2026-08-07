@@ -12,7 +12,7 @@ Designed for brochure/marketing sites behind Cloudflare — including Laravel Cl
 ## Installation
 
 ```bash
-composer require hardimpactdev/cloudflare-cache
+composer require nckrtl/cloudflare-cache
 ```
 
 Publish config (optional):
@@ -48,7 +48,7 @@ CLOUDFLARE_CACHE_SOFT_FAIL=true
 CLOUDFLARE_CACHE_WARM_ENABLED=true
 CLOUDFLARE_CACHE_WARM_AFTER_PURGE=false
 CLOUDFLARE_CACHE_WARM_TIMEOUT=15
-CLOUDFLARE_CACHE_WARM_USER_AGENT="HardImpact-CloudflareCache/1.0 (+https://github.com/hardimpactdev/cloudflare-cache)"
+CLOUDFLARE_CACHE_WARM_USER_AGENT="Nckrtl-CloudflareCache/1.0 (+https://github.com/nckrtl/cloudflare-cache)"
 ```
 
 Create a Cloudflare API token with **Zone → Cache Purge** limited to the site zone.

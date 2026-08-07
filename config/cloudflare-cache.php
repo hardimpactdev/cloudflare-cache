@@ -85,7 +85,7 @@ return [
         'timeout' => (int) env('CLOUDFLARE_CACHE_WARM_TIMEOUT', 15),
         'user_agent' => env(
             'CLOUDFLARE_CACHE_WARM_USER_AGENT',
-            'HardImpact-CloudflareCache/1.0 (+https://github.com/hardimpactdev/cloudflare-cache)',
+            'Nckrtl-CloudflareCache/1.0 (+https://github.com/nckrtl/cloudflare-cache)',
         ),
     ],
 

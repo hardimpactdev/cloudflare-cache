@@ -1,4 +1,4 @@
-# hardimpactdev/cloudflare-cache
+# nckrtl/cloudflare-cache
 
 Laravel package for Cloudflare edge caching: response headers middleware, URL/zone purge, optional warming, and model purge hooks.
 

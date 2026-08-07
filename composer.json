@@ -1,21 +1,21 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "hardimpactdev/cloudflare-cache",
+    "name": "nckrtl/cloudflare-cache",
     "description": "Cloudflare edge caching for Laravel: Cache-Control middleware, URL purge, warming, and Inertia-safe document caching.",
     "keywords": [
-        "HardImpact",
+        "nckrtl",
         "laravel",
         "cloudflare",
         "cache",
         "cdn",
         "purge"
     ],
-    "homepage": "https://github.com/hardimpactdev/cloudflare-cache",
+    "homepage": "https://github.com/nckrtl/cloudflare-cache",
     "license": "MIT",
     "authors": [
         {
-            "name": "HardImpact",
-            "email": "dev@hardimpact.com",
+            "name": "nckrtl",
+            "email": "nick.retel@gmail.com",
             "role": "Developer"
         }
     ],
